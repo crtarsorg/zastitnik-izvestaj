@@ -112,7 +112,14 @@
 
         $('#hideSearch').click(function(event) {
           var a = pretraga();
-          a.hideResult();
+          var uslov = $(this).attr("show");
+
+          if( uslov ) {
+            a.searchTerm()
+          }
+          else{
+            a.hideResult();
+          }
 
         });
 
@@ -134,19 +141,26 @@
           
 
           var pretragaF = function (argument) {
-            $(".sadrzaj-pretrage").show()
+            $(".sadrzaj-pretrage").show();
+            $(".control").show()
           }
           var hideResultF = function (arg) {
-            $(".sadrzaj-pretrage").hide()
+            $(".sadrzaj-pretrage").hide();
             //setuj opciju show
-            $("#hideSearch").html("show")
+            $("#hideSearch").attr("show",true);
+            $("#hideSearch").html("show");
             //return arg;
           }
 
           var removeResultF = function (arg) {
-            $(".sadrzaj-pretrage").remove()
+            $(".control").hide()
+            $('#pretraga-input').val('')
             //ukloni sve dugmice
-            //i pojam pretrage
+            
+            //zasad skrivanje, treba da se ukloni lista pretrage
+            $(".sadrzaj-pretrage").hide();
+
+
           }
 
           return {
