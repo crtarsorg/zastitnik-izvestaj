@@ -43,6 +43,10 @@
   display:none;
 } 
 
+.filtered{
+  background-color: red;
+}
+
 
 </style>
 
@@ -58,26 +62,61 @@ $( document ).ready(function() {
   //console.dir(h);
   
     $( h ).each(function( index ) {
-      //console.log( h[index].innerText.replace(/&nbsp;/g," ") );
       //trim &nbsp
-      $("#nav").append('<span id="showPart'+index+'">'+h[index].innerText.replace(/\u00a0/g," ")+'</span>' );
+      $("#nav").append('<span id="showCont'+index+'">'+h[index].innerText.replace(/\u00a0/g," ")+'</span>' );
 
-      //var t =  $(h[index]).nextUntil(h[index+1]).andSelf().css("background", "red");
+      //put everything between H tags into array
       cont['showCont'+index] =  $(h[index]).nextUntil(h[index+1]).andSelf();
 
 
-//function for click
-$('#showPart'+index).click(function(){
+//function for click in left menu - ID's in main menu has same id as index in cont variable
+  $('#showCont'+index).click(function(){
     console.log( cont['showCont'+index] );
     $('#displayCont').html();
     $('#displayCont').html(cont['showCont'+index]);
     console.dir(cont['showCont'+index])
-}); 
+  }); 
+});
+
+//search input handler
+ $("#filter").keyup(function(){
+      //remove filtered class from document
+      $(".filtered").removeClass("filtered");
+      //TODO remove filtered class from variables
+
+
+ 
+        // Get the filter text / reset the count to zero
+        var filter = $(this).val(), count = 0;
+ 
+        $.each(cont, function(key, val){   
+          if (val.text().search(new RegExp(filter, "i")) > 0) {
+            //ima pojam u textu - nastavi
+
+            //console.dir(val);
+            //console.log(a);
+
+            //add red class to nav
+            $('#'+key).addClass("filtered");
+
+            val.html(function(i, val) {
+                //var re = new RegExp(filter,"gi");  //
+                var re = new RegExp(filter+ "(?![^<>]*>)","gi"); 
+                return val.replace(re,'<span class="filtered" >'+filter+'</span>');
+            });
+
+          }
+        });
+
+        console.log(filter);
+
+    //display num results
+    $("#filter-count").text("Rezultata = "+count);
+
+   });
 
 
 
-
-    });
 
 
 
@@ -90,6 +129,18 @@ console.dir(cont);
 
 
 
+<div id="search">
+
+<form id="live-search" action="" class="styled" method="post">
+    <fieldset>
+        <input type="text" class="text-input" id="filter" value="" />
+        <span id="filter-count"></span>
+        <span id="filterlist"></span>
+    </fieldset>
+</form>
+
+
+</div>
 
 
 <div id="nav">
