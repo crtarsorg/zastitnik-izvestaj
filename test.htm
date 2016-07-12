@@ -92,6 +92,14 @@ $( document ).ready(function() {
         $.each(cont, function(key, val){   
           if (val.text().search(new RegExp(filter, "i")) > 0) {
             //ima pojam u textu - nastavi
+            //prikazi pojam u listi nadjenih
+
+            reg = new RegExp("\\s?([^\\s]+\\s" + filter + "\\s[^\\s]+)\\s?", "i");
+            if(val.text().match(reg)){
+            console.log (val.text().match(reg)[0]);
+            } 
+
+
 
             //console.dir(val);
             //console.log(a);
@@ -108,7 +116,7 @@ $( document ).ready(function() {
           }
         });
 
-        console.log(filter);
+        //console.log(filter);
 
     //display num results
     $("#filter-count").text("Rezultata = "+count);
