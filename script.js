@@ -119,14 +119,14 @@ $(document).ready(function() {
 
 
                         //var re = new RegExp(filter,"gi");  //
-                        var re = new RegExp("(" + filter + ")(?![^<>]*>)", "gi");
+                        var re = new RegExp( filter+"(?![^<>]*>)", "gi");
                         var match_all = val.match(re)
                         if (!match_all)
                             return val;
 
                         match_all.forEach(function(el) {
 
-                            val.replace(re, '<span class="filtered" >' + el + '</span>');
+                            val = val.replace(re, '<span class="filtered" >' + el + '</span>');
                         })
                         return val;
                     
