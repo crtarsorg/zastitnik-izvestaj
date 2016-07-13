@@ -16,12 +16,12 @@
   float: left;
   padding:1%;
 } 
-#nav span{
+#nav div{
   margin:8px;
   padding:2px;
   display: block;
 }
-#nav span:hover{
+#nav div:hover{
   cursor: hand;
   background-color: #cccccc;
 }
@@ -74,7 +74,7 @@ function parseDoc(){
  
     $( h ).each(function( index ) {
       //trim &nbsp
-      $("#nav").append('<span id="showCont'+index+'">'+h[index].innerText.replace(/\u00a0/g," ")+'</span>' );
+      $("#nav").append('<div id="showCont'+index+'">'+h[index].innerText.replace(/\u00a0/g," ")+'</div>' );
 
       //put everything between H tags into array
       cont['showCont'+index] =  $(h[index]).nextUntil(h[index+1]).andSelf();
@@ -94,8 +94,15 @@ function parseDoc(){
 
 //search input handler
  $("#filter").keyup(function(){
-      //remove filtered class from document
-      $(".filtered").removeClass("filtered");
+      //remove filtered class from navigation
+      $("div.filtered").removeClass("filtered");
+      //$('span:not([class])').remove();
+      //convert  spans with class filtered to text - FROM VISIBLE TEXT
+      var spans = $("span.filtered");
+      spans.each(function(index) {
+          var text = $(this).text(); //get span content
+          $(this).replaceWith(text); //replace all span with just content
+      });
       //TODO remove filtered class from variables
 
 
@@ -103,14 +110,24 @@ function parseDoc(){
         // Get the filter text / reset the count to zero
         var filter = $(this).val(), count = 0;
  
-        $.each(cont, function(key, val){   
+        $.each(cont, function(key, val){ 
+          
+          //remove OLD filtered spans from cont variable
+          //replace(/<\/?span[^>]*>/g,"");
+            val.html(function(i, val) {
+                //var re = new RegExp(filter,"gi");  //
+                var re = new RegExp("<\/?span[^>]*>","g"); 
+                return val.replace(re,'');
+            });
+
+
           if (val.text().search(new RegExp(filter, "i")) > 0) {
             //ima pojam u textu - nastavi
             //prikazi pojam u listi nadjenih
 
             reg = new RegExp("\\s?([^\\s]+\\s" + filter + "\\s[^\\s]+)\\s?", "i");
             if(val.text().match(reg)){
-            console.log (val.text().match(reg)[0]);
+            //console.log (val.text().match(reg)[0]);
             } 
 
 
