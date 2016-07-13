@@ -45,7 +45,6 @@ $(document).ready(function() {
         if ($("#filter").val().length < 3) return;
 
 
-
         var $svi_oznaceni = $(".filtered");
 
         $svi_oznaceni.each(function(ind, el) {
@@ -72,6 +71,14 @@ $(document).ready(function() {
             count = 0;
 
         $.each(cont, function(key, val) {
+
+	        //remove filtered results from variable FIRST
+	        val.html(function(i, val) {
+	        	var re = new RegExp("<\/?span[^>]*>","g"); 
+	                return val.replace(re,'');
+	        }); 
+
+
             if (val.text().search(new RegExp(filter, "i")) > 0) {
                 //ima pojam u textu - nastavi
                 //prikazi pojam u listi nadjenih
