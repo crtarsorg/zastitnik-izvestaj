@@ -93,8 +93,10 @@ $(document).ready(function() {
 
                         var pojam_za_prikaz = temp_val.substring(pocetni_index, krajnji_index)
 
+
+
                         pojam_za_prikaz = pojam_za_prikaz.replace(new RegExp(filter, 'ig'), '<span class="filtered" >' + filter + '</span>');
-                        triggerEvent(document, "nadjen-unos", { "detail": { "podaci": pojam_za_prikaz, "meta": "la,la la" } })
+                        triggerEvent(document, "nadjen-unos", { "detail": { "podaci": pojam_za_prikaz, "meta": key } })
 
                     })
 
@@ -113,10 +115,9 @@ $(document).ready(function() {
 
                 
 
-                function curry(t_k) {
-                    return function(i, val) {
+                function highlighting (i, val) {
 
-                        
+
                         //var re = new RegExp(filter,"gi");  //
                         var re = new RegExp("(" + filter + ")(?![^<>]*>)", "gi");
                         var match_all = val.match(re)
@@ -128,12 +129,12 @@ $(document).ready(function() {
                             val.replace(re, '<span class="filtered" >' + el + '</span>');
                         })
                         return val;
-                    }
+                    
                 }
 
-                var temp_key = curry( key );
+                
 
-                val.html(temp_key);
+                val.html( highlighting );
 
             }
         });
@@ -184,7 +185,8 @@ var pretraga = function() {
         $(".sadrzaj-pretrage").empty();
 
         stavke.forEach(function(ind, el) {
-            $(".sadrzaj-pretrage").append("<div class='stavka-pretrage'>" + ind.podaci + "</div>")
+            //treba da se poziva funkcija sa parametrom, da se skrolujem
+            $(".sadrzaj-pretrage").append(" <div class='stavka-pretrage'><a href='#"+ ind.meta+"'>" + ind.podaci + "</a> </div> ")
         })
 
     }
