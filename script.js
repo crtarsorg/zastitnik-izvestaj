@@ -26,6 +26,7 @@ $(document).ready(function() {
         $("#filter").keyup(function() {
             //remove filtered class from document
 
+            if( $("#filter").val().length <3 ) return;    
 
             var $svi_oznaceni = $(".filtered");
 
@@ -47,6 +48,8 @@ $(document).ready(function() {
 
             var pr = pretraga();
 
+                pr.appendFinded(); 
+
             // Get the filter text / reset the count to zero
             var filter = $(this).val(),
                 count = 0;
@@ -60,10 +63,17 @@ $(document).ready(function() {
                     if (val.text().match(reg)) {
                        // console.log(val.text().match(reg)[0]);
 
+                       var temp_nadjeni = val.text().match(reg);
+                       temp_nadjeni.forEach(function(el) {
 
-                        pr.appendFinded();                              
-                        
-                       triggerEvent(document,"nadjen-unos", { "detail": val.text().match(reg)[0] })
+                            //izvuci celu recenicu    
+
+                            triggerEvent(document,"nadjen-unos", { "detail": el })
+
+                       })
+                       
+
+                       
                         
                     }
 
@@ -82,7 +92,10 @@ $(document).ready(function() {
                         if(! match_all )
                           return val;
 
-                        return val.replace(re, '<span class="filtered" >' + match_all[0] + '</span>');
+                        match_all.forEach(function(el) {
+                            val.replace(re, '<span class="filtered" >' + el + '</span>');
+                        })
+                        return val;
                     });
 
                 }
@@ -128,7 +141,7 @@ $(document).ready(function() {
         var prikaziPretraguF = function () {
             
             $(".sadrzaj-pretrage").empty();
-            
+
             stavke.forEach(function (ind, el) {
                 $(".sadrzaj-pretrage").append("<div class='stavka-pretrage'>"+ind+"</div>")
             })
