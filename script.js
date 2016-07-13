@@ -63,12 +63,21 @@ $(document).ready(function() {
                     if (val.text().match(reg)) {
                        // console.log(val.text().match(reg)[0]);
 
-                       var temp_nadjeni = val.text().match(reg);
+                       var temp_val = val.text();
+                       var temp_nadjeni = temp_val.match(reg);
+
                        temp_nadjeni.forEach(function(el) {
 
-                            //izvuci celu recenicu    
+                            //nadji prvo pojavljivanje - uzmi index
+                            // uzmi iteme pre i posle
+                            var osnovni_index = temp_val.indexOf(el);
+                            var pocetni_index = (osnovni_index - 50 )>0 ? (osnovni_index - 50 ) : 0;
+                            var krajnji_index =  (osnovni_index + 50 ) < temp_val.length ? (osnovni_index + 50 ) : temp_val.length;
 
-                            triggerEvent(document,"nadjen-unos", { "detail": el })
+                            var pojam_za_prikaz = temp_val.substring( pocetni_index, krajnji_index)
+ 
+                            pojam_za_prikaz = pojam_za_prikaz.replace(new RegExp(filter,'ig'), '<span class="filtered" >' + filter + '</span>');
+                            triggerEvent(document,"nadjen-unos", { "detail": pojam_za_prikaz })
 
                        })
                        
@@ -92,7 +101,8 @@ $(document).ready(function() {
                         if(! match_all )
                           return val;
 
-                        match_all.forEach(function(el) {
+                        match_all.forEach(function(el) {                            
+
                             val.replace(re, '<span class="filtered" >' + el + '</span>');
                         })
                         return val;
@@ -153,6 +163,8 @@ $(document).ready(function() {
             document.addEventListener("nadjen-unos", function(e) {
               //console.log(e.detail); 
             
+
+            // sta ako ima vise pojavaljivanja nekog termina u jednom pasusu? da li treba da se prikaze u pretrazi
             if(stavke.indexOf(e.detail) == -1 )  
              stavke.push(e.detail);
                
