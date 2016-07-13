@@ -1,6 +1,21 @@
 $(document).ready(function() {
         console.log("ready!");
 
+        var pr = pretraga();
+
+        pr.appendFinded(); 
+
+
+        $("#hideSearch").click(function(ev) {
+            pr.hideResult();
+        })
+
+        $("#closeSearch").click(function(ev) {
+            pr.removeResult();
+        })
+
+
+
         var h = $(":header");
         var cont = {};
         //console.dir(h);
@@ -28,6 +43,8 @@ $(document).ready(function() {
 
             if( $("#filter").val().length <3 ) return;    
 
+
+
             var $svi_oznaceni = $(".filtered");
 
             $svi_oznaceni.each(function (ind,el) {
@@ -41,14 +58,14 @@ $(document).ready(function() {
                 }
             })
             
+            pr.resetResult();
+            pr.searchTerm();
             
             // ukloniti span tagove, ostaviti sadrzaj
             
             //TODO remove filtered class from variables
 
-            var pr = pretraga();
-
-                pr.appendFinded(); 
+            
 
             // Get the filter text / reset the count to zero
             var filter = $(this).val(),
@@ -148,6 +165,10 @@ $(document).ready(function() {
         var stavke = [];
 
 
+        var resetF = function() {
+            stavke = [];
+        }
+
         var prikaziPretraguF = function () {
             
             $(".sadrzaj-pretrage").empty();
@@ -198,6 +219,7 @@ $(document).ready(function() {
         }
 
         return {
+            resetResult: resetF,
             displaySearch: prikaziPretraguF,
             appendFinded: dodajF,
             searchTerm: pretragaF,
