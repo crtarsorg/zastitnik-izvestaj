@@ -84,41 +84,7 @@ $(document).ready(function() {
 
 
             if (val.text().search(new RegExp(filter, "i")) > 0) {
-                //ima pojam u textu - nastavi
-                //prikazi pojam u listi nadjenih
-
-                reg = new RegExp("\\s?([^\\s]+\\s+" + filter + "\\S+\\s+[^\\s]+)\\s?", "ig");
-                if (val.text().match(reg)) {
-                    // console.log(val.text().match(reg)[0]);
-
-                    var temp_val = val.text();
-                    var temp_nadjeni = temp_val.match(reg);
-
-                    temp_nadjeni.forEach(function(el) {
-
-                        //nadji prvo pojavljivanje - uzmi index
-                        // uzmi iteme pre i posle
-                        var osnovni_index = temp_val.indexOf(el);
-                        var pocetni_index = (osnovni_index - 50) > 0 ? (osnovni_index - 50) : 0;
-                        var krajnji_index = (osnovni_index + 50) < temp_val.length ? (osnovni_index + 50) : temp_val.length;
-
-                        var pojam_za_prikaz = temp_val.substring(pocetni_index, krajnji_index)
-
-                        pojam_za_prikaz = pojam_za_prikaz.replace(new RegExp(filter, 'ig'), '<span class="filtered" >' + filter + '</span>');
-                        //triggerEvent(document, "nadjen-unos", { "detail": { "podaci": pojam_za_prikaz, "meta": key } })
-
-                    })
-
-
-
-
-                }
-
-
-
-                //console.dir(val);
-                //console.log(a);
-
+             
                 //add red class to nav
                 $('#' + key).addClass("filtered");
 
@@ -277,3 +243,5 @@ var pretraga = function() {
         removeResult: removeResultF
     }
 }
+
+
