@@ -30,10 +30,12 @@ $(document).ready(function() {
 
         //function for click in left menu - ID's in main menu has same id as index in cont variable
         $('#showCont' + index).click(function() {
-            console.log(cont['showCont' + index]);
+            //console.log(cont['showCont' + index]);
             $('#displayCont').html();
             $('#displayCont').html(cont['showCont' + index]);
-            console.dir(cont['showCont' + index])
+
+
+
         });
     });
 
@@ -61,9 +63,6 @@ $(document).ready(function() {
         pr.searchTerm();
 
         // ukloniti span tagove, ostaviti sadrzaj
-
-        //TODO remove filtered class from variables
-
 
 
         // Get the filter text / reset the count to zero
@@ -100,10 +99,8 @@ $(document).ready(function() {
 
                         var pojam_za_prikaz = temp_val.substring(pocetni_index, krajnji_index)
 
-
-
                         pojam_za_prikaz = pojam_za_prikaz.replace(new RegExp(filter, 'ig'), '<span class="filtered" >' + filter + '</span>');
-                        triggerEvent(document, "nadjen-unos", { "detail": { "podaci": pojam_za_prikaz, "meta": key } })
+                        //triggerEvent(document, "nadjen-unos", { "detail": { "podaci": pojam_za_prikaz, "meta": key } })
 
                     })
 
@@ -133,7 +130,12 @@ $(document).ready(function() {
 
                         match_all.forEach(function(el) {
 
-                            val = val.replace(re, '<span class="filtered" >' + el + '</span>');
+                        count = count+1;
+
+                            val = val.replace(re, '<span class="filtered" id="'+key+'-'+count+'" >' + count+el + '</span>');
+
+                            triggerEvent(document, "nadjen-unos", { "detail": { "podaci": count+el, "meta": key+'-'+count } })
+
                         })
                         return val;
                     
@@ -156,11 +158,22 @@ $(document).ready(function() {
     });
 
 
+//load chapter and show filtered content if any ??????
+
+window.onpopstate = function(event) {
+    var hash = window.location.hash.replace("#", "");
+    $('#'+hash.split('-')[0]).trigger('click');
+
+                //scroll to found keyword in content
+                $('html body').animate({
+                    scrollTop: $('#displayCont #'+hash).offset().top
+                }, 500);
+
+};
 
 
 
-
-    console.dir(cont);
+//    console.dir(cont);
 
 
 
