@@ -133,13 +133,24 @@ $(document).ready(function() {
                         if (!match_all)
                             return val;
 
+
+
+
                         match_all.forEach(function(el) {
+                        var val_text = $( $.parseHTML(val) ).text() ;
+
+                        var osnovni_index = val_text.indexOf(el);
+                        var pocetni_index = (osnovni_index - 50) > 0 ? (osnovni_index - 50) : 0;
+                        var krajnji_index = (osnovni_index + 50) < val_text.length ? (osnovni_index + 50) : val_text.length;
+
+                        var pojam_za_prikaz = val_text.substring(pocetni_index, krajnji_index)
 
                         count = count+1;
 
-                            val = val.replace(re, '<span class="filtered" id="'+key+'-'+count+'" >' + count+el + '</span>');
+                            pojam_za_prikaz = pojam_za_prikaz.replace(re, '<span class="filtered" id="'+key+'-'+count+'" >' + el + '</span>');
+                            val = val.replace(re, '<span class="filtered" id="'+key+'-'+count+'" >' + el + '</span>');
 
-                            triggerEvent(document, "nadjen-unos", { "detail": { "podaci": count+el, "meta": key+'-'+count } })
+                            triggerEvent(document, "nadjen-unos", { "detail": { "podaci": pojam_za_prikaz, "meta": key+'-'+count } })
 
                         })
                         return val;
