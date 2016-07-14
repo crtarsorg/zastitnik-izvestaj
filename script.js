@@ -21,8 +21,13 @@ $(document).ready(function() {
     //console.dir(h);
 
     $(h).each(function(index) {
+        console.dir(h[index]);
         //trim &nbsp
-        $("#nav").append('<span id="showCont' + index + '">' + h[index].innerText.replace(/\u00a0/g, " ") + '</span>');
+        if(h[index].nodeName=="H1") {
+           $("#nav").append('<span class="emptyHeader" id="showCont' + index + '">' + h[index].innerText.replace(/\u00a0/g, " ") + '</span>'); return true;
+        }
+
+        $("#nav").append('<span class="header" id="showCont' + index + '">' + h[index].innerText.replace(/\u00a0/g, " ") + '</span>');
 
         //put everything between H tags into array
         cont['showCont' + index] = $(h[index]).nextUntil(h[index + 1]).andSelf();
