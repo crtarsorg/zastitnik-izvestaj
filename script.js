@@ -14,14 +14,37 @@ $(document).ready(function() {
         pr.removeResult();
     })
 
+    // show compare window 
+    $('#uporedi').click(function() {
+
+        $('#displayContCompare').html(html2compare);
+
+		$(function () {
+		    $("#displayCont").animate({
+		       width: '36%'
+		    }, { duration: 200, queue: false });
+		    $("#displayContCompare").animate({
+		       width: '36%',opacity: 1.0
+		    }, { duration: 200, queue: false });
+		});
+
+    });
+
+
+
 
 
     var h = $(":header");
     var cont = {};
+    var html2compare;
+    	//http://stackoverflow.com/questions/11583271
+	    $.get("xtestCompare.html", function(response) {
+	     	html2compare = response;
+		});
     //console.dir(h);
 
     $(h).each(function(index) {
-        console.dir(h[index]);
+        //console.dir(h[index]);
         //trim &nbsp
         if(h[index].nodeName=="H1") {
            $("#nav").append('<span class="emptyHeader" id="showCont' + index + '">' + h[index].innerText.replace(/\u00a0/g, " ") + '</span>'); return true;
@@ -155,8 +178,8 @@ window.onpopstate = function(event) {
 
 
 
-//    console.dir(cont);
-
+// show first 
+$('#showCont0').trigger('click');
 
 
 });
