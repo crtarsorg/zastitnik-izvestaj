@@ -36,6 +36,7 @@ $(document).ready(function() {
 
     var h = $(":header");
     var cont = {};
+    var oldH = 0;
     var html2compare;
     	//http://stackoverflow.com/questions/11583271
 	    $.get("xtestCompare.html", function(response) {
@@ -47,13 +48,16 @@ $(document).ready(function() {
         //console.dir(h[index]);
         //trim &nbsp
         if(h[index].nodeName=="H1") {
-           $("#nav").append('<span class="emptyHeader" id="showCont' + index + '">' + h[index].innerText.replace(/\u00a0/g, " ") + '</span>'); return true;
+           $("#nav").append('<span class="emptyHeader" id="showCont' + index + '">' + h[index].innerText.replace(/\u00a0/g, " ") + '</span>'); //return true;
+           oldH = index;
+        } else {
+            $("#nav").append('<span class="header" id="showCont' + index + '">' + h[index].innerText.replace(/\u00a0/g, " ") + '</span>');
         }
-
-        $("#nav").append('<span class="header" id="showCont' + index + '">' + h[index].innerText.replace(/\u00a0/g, " ") + '</span>');
 
         //put everything between H tags into array
         cont['showCont' + index] = $(h[index]).nextUntil(h[index + 1]).andSelf();
+        //make H1 contain all text from sub H2
+        $.merge( cont['showCont' + oldH],cont['showCont' + index]  );
 
 
         //function for click in left menu - ID's in main menu has same id as index in cont variable
