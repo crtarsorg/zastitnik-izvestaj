@@ -32,10 +32,9 @@ $(document).ready(function() {
 
 
 
-
-
     var h = $(":header");
     var cont = {};
+    var excludedSearch = [];
     var oldH = 0;
     var html2compare;
     	//http://stackoverflow.com/questions/11583271
@@ -47,28 +46,31 @@ $(document).ready(function() {
     $(h).each(function(index) {
         //console.dir(h[index]);
         //trim &nbsp
+
         if(h[index].nodeName=="H1") {
            $("#nav").append('<span class="emptyHeader" id="showCont' + index + '">' + h[index].innerText.replace(/\u00a0/g, " ") + '</span>'); //return true;
            oldH = index;
+           excludedSearch.push('showCont'+index);
+           //set plain HTML for Chapters
+
         } else {
             $("#nav").append('<span class="header" id="showCont' + index + '">' + h[index].innerText.replace(/\u00a0/g, " ") + '</span>');
         }
 
         //put everything between H tags into array
         cont['showCont' + index] = $(h[index]).nextUntil(h[index + 1]).andSelf();
-        //make H1 contain all text from sub H2
+        //merge is ok as lon as you put header variable name into excluded search
         $.merge( cont['showCont' + oldH],cont['showCont' + index]  );
 
 
+//console.dir(cont['showCont' + index]);
+
         //function for click in left menu - ID's in main menu has same id as index in cont variable
         $('#showCont' + index).click(function() {
-            //console.log(cont['showCont' + index]);
             $('#displayCont').html();
             $('#displayCont').html(cont['showCont' + index]);
-
-
-
         });
+
     });
 
     //search input handler
@@ -105,20 +107,19 @@ $(document).ready(function() {
 
 	        //remove filtered results from variable FIRST
 	        val.html(function(i, val) {
-	        	var re = new RegExp("<\/?span[^>]*>","g"); 
+	        	var re = new RegExp("<\/?span[^>]*>","g");
 	                return val.replace(re,'');
-	        }); 
+	        });
 
+            //disable search in headear variable (but those will be marked bcz of referencing)
+            if ( $.inArray( key, excludedSearch )<0 && val.text().search(new RegExp(filter, "i")) > 0   ) {     //  && key!="showCont5"   console.log(key);
 
-            if (val.text().search(new RegExp(filter, "i")) > 0) {
-             
                 //add red class to nav
                 $('#' + key).addClass("filtered");
 
-                
 
                 function highlighting (i, val) {
-
+//console.dir(val);
 
                         //var re = new RegExp(filter,"gi");  //
                         var re = new RegExp( filter+"(?![^<>]*>)", "gi");
@@ -130,6 +131,7 @@ $(document).ready(function() {
 
 
                         match_all.forEach(function(el) {
+
                         var val_text = $( $.parseHTML(val) ).text() ;
 
                         var osnovni_index = val_text.indexOf(el);
@@ -149,10 +151,9 @@ $(document).ready(function() {
                         return val;
                     
                 }
-
-                
-
                 val.html( highlighting );
+
+
 
             }
         });
