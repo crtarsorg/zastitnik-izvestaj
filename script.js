@@ -70,8 +70,13 @@ $(document).ready(function() {
 
         //put everything between H tags into array
         cont['showCont' + index] = $(h[index]).nextUntil(h[index + 1]).andSelf();
+
+//        $.each(cont['showCont' + index],function(i){
+//            cont['showCont' + oldH].append(cont['showCont' + index][i]);
+//        })
+
         //merge is ok as lon as you put header variable name into excluded search
-       // $.merge( cont['showCont' + oldH],cont['showCont' + index]  );
+        $.merge( cont['showCont' + oldH],cont['showCont' + index]  );
 
 
 //console.dir(cont['showCont' + index]);
@@ -98,21 +103,21 @@ $(document).ready(function() {
  console.log(ev.keyCode)
         key_u++;*/
 
-        var $svi_oznaceni = $(".filtered");
-
-        $svi_oznaceni.each(function(ind, el) {
-            //ako ima id ili klasu, samo ukloni filterd klasu
-            if( $(el).prop("id").indexOf("showCont")!=-1 )
-                {
-                    $(el).contents().unwrap();
-                }
-            else if ($(el).prop("id")   || !($(el).attr("class") == "filtered")) //ili ima klasu
-                $(el).removeClass("filtered");
-            else {
-                //http://stackoverflow.com/a/4232971s
-                $(el).contents().unwrap();
-            }
-        })
+//        var $svi_oznaceni = $(".filtered");
+//
+//        $svi_oznaceni.each(function(ind, el) {
+//            //ako ima id ili klasu, samo ukloni filterd klasu
+//            if( $(el).prop("id").indexOf("showCont")!=-1 )
+//                {
+//                    $(el).contents().unwrap();
+//                }
+//            else if ($(el).prop("id")   || !($(el).attr("class") == "filtered")) //ili ima klasu
+//                $(el).removeClass("filtered");
+//            else {
+//                //http://stackoverflow.com/a/4232971s
+//                $(el).contents().unwrap();
+//            }
+//        })
 
         pr.resetResult();
         pr.searchTerm();
@@ -134,34 +139,34 @@ $(document).ready(function() {
                   return;
             }
 
+            //remove filtered results from variable FIRST
+            val.html(function(i, val_h) {
+                var val_ar;
+                var re = new RegExp("<\/?span[^>]*>","g");
+
+                val_ar= val_h.replace(re,'');
+                return val_ar;
+
+            });
 
 
-	        
             //disable search in headear variable (but those will be marked bcz of referencing)
-          
+
                 //add red class to nav
                 $('#' + key).addClass("filtered");
 
 
  //console.log(count_l);
-                count_l++;
+                //count_l++;
                 function highlighting (i, val_ht) {
 //console.dir(val);
 
 
                // console.log(val_ht);
-               
-                                        //remove filtered results from variable FIRST
-                           /* $(val_ht).html(function(i, val_h) {
-                                var val_ar;
-                                var re = new RegExp("<\/?span[^>]*>","g");
-                                
-                                val_ar= val_h.replace(re,'');    
-                                return val_ar;
 
-                            });*/
 
-                        //уклони постојеће
+
+                        //?????? ?????????
                         //var re = new RegExp(filter,"gi");  //
                         var re = new RegExp( filter+"(?![^<>]*>)", "gi");
                         var match_all = val_ht.match(re)
@@ -190,7 +195,7 @@ $(document).ready(function() {
 
                             var detail = { "podaci": pojam_za_prikaz, "meta": key+'-'+count,'position':osnovni_index }    ;
 
-                              if (stavke.indexOfId(detail) == -1)
+                              //if (stavke.indexOfId(detail) == -1)
                                 stavke.push(detail);
     
                            // triggerEvent(document, "nadjen-unos", {  })
@@ -199,12 +204,44 @@ $(document).ready(function() {
                         return val_ht;
                     
                 }
-                val.html( highlighting );
+                //val.html( highlighting );
 
-              /*  val.html(function(i, val) {
-                    var re = new RegExp(filter+"(?![^<>]*>)","gi");
-                        return val.replace(re,'<span class="filtered" id="'+key+'-'+count+'" >' + filter + '</span>');
-                });*/
+                val.html(function (i, valspan) {
+//console.log('xxxxxxxxx');
+                    //var re = new RegExp(filter+"(?![^<>]*>)","i");
+                    var re = new RegExp("(?!<span[^>]*?>)("+filter+")(?![^<]*?</span>)","i");
+
+                    //test regex in loop and make changes
+                    while (re.test(valspan)) {
+                        //console.log(re.test(valspan));
+
+                        valspan = valspan.replace(re,'<span class="filtered" id="'+key+'-'+count+'" >' + filter + '</span>');
+                        //push to result list
+                        var detail = { "podaci": filter, "meta": key+'-'+count,'position':count }    ;
+                        stavke.push(detail);
+
+                        count++;
+                    }
+
+
+//                    //check if replacement happend
+//                    if(out.length!=valspan.length){
+//                        //push item to list
+//                        var detail = { "podaci": filter, "meta": key+'-'+count,'position':count }    ;
+//                        stavke.push(detail);
+//                        // increase count
+//                        count++;
+//                    }
+
+                    //create list
+
+                    //if (stavke.indexOfId(detail) == -1)
+
+
+
+
+                        return valspan;
+                });
 
             
         });
