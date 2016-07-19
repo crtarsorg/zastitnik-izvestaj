@@ -209,19 +209,45 @@ $(document).ready(function() {
                 val.html(function (i, valspan) {
 //console.log('xxxxxxxxx');
                     //var re = new RegExp(filter+"(?![^<>]*>)","i");
+                    //http://stackoverflow.com/questions/12493128
                     var re = new RegExp("(?!<span[^>]*?>)("+filter+")(?![^<]*?</span>)","i");
 
-                    //test regex in loop and make changes
-                    while (re.test(valspan)) {
-                        //console.log(re.test(valspan));
+                        //test regex in loop and make changes - match_all too many problems - using while
+                        while (re.test(valspan)) {
+//console.dir(count);
 
-                        valspan = valspan.replace(re,'<span class="filtered" id="'+key+'-'+count+'" >' + filter + '</span>');
-                        //push to result list
-                        var detail = { "podaci": filter, "meta": key+'-'+count,'position':count }    ;
-                        stavke.push(detail);
 
-                        count++;
-                    }
+                            valspan = valspan.replace(re,'<span class="filtered" id="'+key+'-'+count+'" >' + filter + '</span>');
+                            //push to result list
+                            //var refind = ("(?![^<>]*>)","i");
+                            //var refind = new RegExp("(<span[^>]*?>)("+filter+")([^<]*?</span>)","i");
+//Resenje 1
+var surroudingWords = valspan.substr(valspan.lastIndexOf('<span class="filtered" id="'+key+'-'+count+'" >' + filter + '</span>'),valspan.length);
+var pretext = valspan.substr(0,valspan.lastIndexOf('<span class="filtered" id="'+key+'-'+count+'" >' + filter + '</span>'));
+var surroudingWords = pretext.split(" ").splice(-5).join(" ") +" "+ $( $.parseHTML(surroudingWords) ).text().split(" ").splice(0,10).join(" "); ;
+
+                            //var filterPos = valspan.lastIndexOf('<span class="filtered"');
+
+
+//Resenje 2
+//var filterIndex = valspan.lastIndexOf('<span class="filtered" id="'+key+'-'+count+'" >' + filter + '</span>');
+//var pretext = $( $.parseHTML(valspan.substr(0,filterIndex)) ).text().split(" ").splice(-5).join(" ");
+//var posttext = $( $.parseHTML(valspan.substr(filterIndex,valspan.length)) ).text().split(" ").splice(1,5).join(" ");
+//var surroudingWords = pretext + filter+" " +posttext  ;    //
+                            //surroudingWords =  surroudingWords.substr(0, Math.min(surroudingWords.length, surroudingWords.lastIndexOf(" ")))
+                            //surroudingWords =  surroudingWords.match(refind, "")
+
+                            //var surroudingWords = $( $.parseHTML(valspan) ) ; ??????
+
+                            //console.dir("filterIndex:"+filterIndex);
+                            //console.dir(valspan);
+                            //console.dir(surroudingWords);
+
+                            var detail = { "podaci": surroudingWords, "meta": key+'-'+count,'position':count }    ;
+                            stavke.push(detail);
+
+                            count++;
+                        }
 
 
 //                    //check if replacement happend
