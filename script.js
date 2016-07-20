@@ -221,10 +221,10 @@ $(document).ready(function() {
                             //push to result list
                             //var refind = ("(?![^<>]*>)","i");
                             //var refind = new RegExp("(<span[^>]*?>)("+filter+")([^<]*?</span>)","i");
-//Resenje 1
+//Resenje 1 -
 var surroudingWords = valspan.substr(valspan.lastIndexOf('<span class="filtered" id="'+key+'-'+count+'" >' + filter + '</span>'),valspan.length);
 var pretext = valspan.substr(0,valspan.lastIndexOf('<span class="filtered" id="'+key+'-'+count+'" >' + filter + '</span>'));
-var surroudingWords = pretext.split(" ").splice(-5).join(" ") +" "+ $( $.parseHTML(surroudingWords) ).text().split(" ").splice(0,10).join(" "); ;
+var surroudingWords = $( $.parseHTML(pretext) ).text().split(" ").splice(-5).join(" ") +" "+ $( $.parseHTML(surroudingWords) ).text().split(" ").splice(0,10).join(" "); ;
 
                             //var filterPos = valspan.lastIndexOf('<span class="filtered"');
 
