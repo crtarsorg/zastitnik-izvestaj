@@ -214,16 +214,17 @@ $(document).ready(function() {
 
                         //test regex in loop and make changes - match_all too many problems - using while
                         while (re.test(valspan)) {
-//console.dir(count);
 
+                        var foundSearchTerm =  re.exec(valspan)[0];
 
-                            valspan = valspan.replace(re,'<span class="filtered" id="'+key+'-'+count+'" >' + filter + '</span>');
+                            valspan = valspan.replace(re,'<span class="filtered" id="'+key+'-'+count+'" >' + foundSearchTerm + '</span>');
+
                             //push to result list
                             //var refind = ("(?![^<>]*>)","i");
                             //var refind = new RegExp("(<span[^>]*?>)("+filter+")([^<]*?</span>)","i");
 //Resenje 1 -
-var surroudingWords = valspan.substr(valspan.lastIndexOf('<span class="filtered" id="'+key+'-'+count+'" >' + filter + '</span>'),valspan.length);
-var pretext = valspan.substr(0,valspan.lastIndexOf('<span class="filtered" id="'+key+'-'+count+'" >' + filter + '</span>'));
+var surroudingWords = valspan.substr(valspan.lastIndexOf('<span class="filtered" id="'+key+'-'+count+'" >' + foundSearchTerm + '</span>'),valspan.length);
+var pretext = valspan.substr(0,valspan.lastIndexOf('<span class="filtered" id="'+key+'-'+count+'" >' + foundSearchTerm + '</span>'));
 var surroudingWords = $( $.parseHTML(pretext) ).text().split(" ").splice(-5).join(" ") +" "+ $( $.parseHTML(surroudingWords) ).text().split(" ").splice(0,10).join(" "); ;
 
                             //var filterPos = valspan.lastIndexOf('<span class="filtered"');
@@ -242,6 +243,7 @@ var surroudingWords = $( $.parseHTML(pretext) ).text().split(" ").splice(-5).joi
                             //console.dir("filterIndex:"+filterIndex);
                             //console.dir(valspan);
                             //console.dir(surroudingWords);
+                            //console.dir("found:"+foundSearchTerm);
 
                             var detail = { "podaci": surroudingWords, "meta": key+'-'+count,'position':count }    ;
                             stavke.push(detail);
