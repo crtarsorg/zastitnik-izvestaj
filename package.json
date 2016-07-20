@@ -10,5 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "sanitize-html": "^1.12.0"
+
   }
 }

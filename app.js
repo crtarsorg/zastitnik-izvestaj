@@ -1,20 +1,37 @@
 
 var fs = require('fs');
 var sanitizeHtml = require('sanitize-html');
+var html = require("html");
 
 
-fs.readFile('./test.htm', 'utf8', function (err,data) {
-  if (err) {
-    return console.log(err);
-  }
-  //console.log(data);
-  
-  ocisti(data)
-});
+getFiles("./dokumenti/");
+
+function getFiles (dir, files_){
+    files_ = files_ || [];
+    var files = fs.readdirSync(dir);
+
+    for (var i in files){
+        var name = dir + '' + files[i];
+        
+        console.log(name);
+
+		if(fs.lstatSync(name).isDirectory())
+			continue;
+		var data = fs.readFileSync( name /*'./test.htm'*/, 'utf8').toString();
+		  
+		 ocisti(data, files[i]);
+		  //close file
+		  
+    }
+    return files_;
+}
 
 
 
-function ocisti(podaci ) {
+
+
+
+function ocisti(podaci , naziv) {
 	var initPodesavanja = {
 		allowedTags: [ 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'p', 'a', 'ul', 'ol',
 		  'nl', 'li', 'b', 'i', 'strong', 'em', 'strike', 'code', 'hr', 'br', 'div',
@@ -38,9 +55,10 @@ function ocisti(podaci ) {
 	}
 
 	var clean = sanitizeHtml(podaci , initPodesavanja );
+	clean = html.prettyPrint(clean, {indent_size: 2}); 
 
 
-	fs.writeFile("./clean.html", clean, function(err) {
+	fs.writeFile("./dokumenti/"+naziv+"rez.html"/*"./clean.html"*/, clean, function(err) {
 	    if(err) {
 	        return console.log(err);
 	    }
