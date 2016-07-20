@@ -1,3 +1,14 @@
+var stavke = [];
+
+
+Array.prototype.indexOfId = function(el) {
+    for (var i = 0; i < this.length; i++)
+        if (this[i].meta.split("-")[0] === el.meta.split("-")[0] && el.position == this[i].position)
+            return i;
+    return -1;
+}
+
+
 $(document).ready(function() {
     console.log("ready!");
 
@@ -59,6 +70,11 @@ $(document).ready(function() {
 
         //put everything between H tags into array
         cont['showCont' + index] = $(h[index]).nextUntil(h[index + 1]).andSelf();
+
+//        $.each(cont['showCont' + index],function(i){
+//            cont['showCont' + oldH].append(cont['showCont' + index][i]);
+//        })
+
         //merge is ok as lon as you put header variable name into excluded search
         $.merge( cont['showCont' + oldH],cont['showCont' + index]  );
 
@@ -73,25 +89,35 @@ $(document).ready(function() {
 
     });
 
+   // var key_u = 0;
+
     //search input handler
-    $("#filter").keyup(function() {
+    $("#filter").keyup(function(ev) {
+
         //remove filtered class from document
         if ($("#filter").val().length == 0) pr.removeResult();
 
         if ($("#filter").val().length < 3) return;
 
+ /*console.log("key up " +key_u )
+ console.log(ev.keyCode)
+        key_u++;*/
 
-        var $svi_oznaceni = $(".filtered");
-
-        $svi_oznaceni.each(function(ind, el) {
-            //ako ima id ili klasu, samo ukloni filterd klasu
-            if ($(el).prop("id") || !($(el).attr("class") == "filtered")) //ili ima klasu
-                $(el).removeClass("filtered");
-            else {
-                //http://stackoverflow.com/a/4232971s
-                $(el).contents().unwrap();
-            }
-        })
+//        var $svi_oznaceni = $(".filtered");
+//
+//        $svi_oznaceni.each(function(ind, el) {
+//            //ako ima id ili klasu, samo ukloni filterd klasu
+//            if( $(el).prop("id").indexOf("showCont")!=-1 )
+//                {
+//                    $(el).contents().unwrap();
+//                }
+//            else if ($(el).prop("id")   || !($(el).attr("class") == "filtered")) //ili ima klasu
+//                $(el).removeClass("filtered");
+//            else {
+//                //http://stackoverflow.com/a/4232971s
+//                $(el).contents().unwrap();
+//            }
+//        })
 
         pr.resetResult();
         pr.searchTerm();
@@ -102,37 +128,57 @@ $(document).ready(function() {
         // Get the filter text / reset the count to zero
         var filter = $(this).val(),
             count = 0;
+//var count_l = 0
 
         $.each(cont, function(key, val) {
 
-	        //remove filtered results from variable FIRST
-	        val.html(function(i, val) {
-	        	var re = new RegExp("<\/?span[^>]*>","g");
-	                return val.replace(re,'');
-	        });
+            if ( $.inArray( key, excludedSearch )>=0   ) {     //  && key!="showCont5"   console.log(key);
+                return;
+            }
+            if( val.text().search(new RegExp(filter, "i")) < 0  ){
+                  return;
+            }
+
+            //remove filtered results from variable FIRST
+            val.html(function(i, val_h) {
+                var val_ar;
+                var re = new RegExp("<\/?span[^>]*>","g");
+
+                val_ar= val_h.replace(re,'');
+                return val_ar;
+
+            });
+
 
             //disable search in headear variable (but those will be marked bcz of referencing)
-            if ( $.inArray( key, excludedSearch )<0 && val.text().search(new RegExp(filter, "i")) > 0   ) {     //  && key!="showCont5"   console.log(key);
 
                 //add red class to nav
                 $('#' + key).addClass("filtered");
 
 
-                function highlighting (i, val) {
+ //console.log(count_l);
+                //count_l++;
+                function highlighting (i, val_ht) {
 //console.dir(val);
 
+
+               // console.log(val_ht);
+
+
+
+                        //?????? ?????????
                         //var re = new RegExp(filter,"gi");  //
                         var re = new RegExp( filter+"(?![^<>]*>)", "gi");
-                        var match_all = val.match(re)
+                        var match_all = val_ht.match(re)
                         if (!match_all)
-                            return val;
+                            return val_ht;
 
 
 
 
                         match_all.forEach(function(el) {
 
-                        var val_text = $( $.parseHTML(val) ).text() ;
+                        var val_text = $( $.parseHTML(val_ht) ).text() ;
 
                         var osnovni_index = val_text.indexOf(el);
                         var pocetni_index = (osnovni_index - 50) > 0 ? (osnovni_index - 50) : 0;
@@ -140,22 +186,90 @@ $(document).ready(function() {
 
                         var pojam_za_prikaz = val_text.substring(pocetni_index, krajnji_index)
 
+                      
                         count = count+1;
 
-                            pojam_za_prikaz = pojam_za_prikaz.replace(re, '<span class="filtered" id="'+key+'-'+count+'" >' + el + '</span>');
-                            val = val.replace(re, '<span class="filtered" id="'+key+'-'+count+'" >' + el + '</span>');
 
-                            triggerEvent(document, "nadjen-unos", { "detail": { "podaci": pojam_za_prikaz, "meta": key+'-'+count } })
+                            pojam_za_prikaz = pojam_za_prikaz.replace(re, '<span class="filtered" id="'+key+'-'+count+'" >' + el + '</span>');
+                            val_ht = val_ht.replace(re, '<span class="filtered" id="'+key+'-'+count+'" >' + el + '</span>');
+
+                            var detail = { "podaci": pojam_za_prikaz, "meta": key+'-'+count,'position':osnovni_index }    ;
+
+                              //if (stavke.indexOfId(detail) == -1)
+                                stavke.push(detail);
+    
+                           // triggerEvent(document, "nadjen-unos", {  })
 
                         })
-                        return val;
+                        return val_ht;
                     
                 }
-                val.html( highlighting );
+                //val.html( highlighting );
+
+                val.html(function (i, valspan) {
+//console.log('xxxxxxxxx');
+                    //var re = new RegExp(filter+"(?![^<>]*>)","i");
+                    //http://stackoverflow.com/questions/12493128
+                    var re = new RegExp("(?!<span[^>]*?>)("+filter+")(?![^<]*?</span>)","i");
+
+                        //test regex in loop and make changes - match_all too many problems - using while
+                        while (re.test(valspan)) {
+//console.dir(count);
+
+
+                            valspan = valspan.replace(re,'<span class="filtered" id="'+key+'-'+count+'" >' + filter + '</span>');
+                            //push to result list
+                            //var refind = ("(?![^<>]*>)","i");
+                            //var refind = new RegExp("(<span[^>]*?>)("+filter+")([^<]*?</span>)","i");
+//Resenje 1 -
+var surroudingWords = valspan.substr(valspan.lastIndexOf('<span class="filtered" id="'+key+'-'+count+'" >' + filter + '</span>'),valspan.length);
+var pretext = valspan.substr(0,valspan.lastIndexOf('<span class="filtered" id="'+key+'-'+count+'" >' + filter + '</span>'));
+var surroudingWords = $( $.parseHTML(pretext) ).text().split(" ").splice(-5).join(" ") +" "+ $( $.parseHTML(surroudingWords) ).text().split(" ").splice(0,10).join(" "); ;
+
+                            //var filterPos = valspan.lastIndexOf('<span class="filtered"');
+
+
+//Resenje 2
+//var filterIndex = valspan.lastIndexOf('<span class="filtered" id="'+key+'-'+count+'" >' + filter + '</span>');
+//var pretext = $( $.parseHTML(valspan.substr(0,filterIndex)) ).text().split(" ").splice(-5).join(" ");
+//var posttext = $( $.parseHTML(valspan.substr(filterIndex,valspan.length)) ).text().split(" ").splice(1,5).join(" ");
+//var surroudingWords = pretext + filter+" " +posttext  ;    //
+                            //surroudingWords =  surroudingWords.substr(0, Math.min(surroudingWords.length, surroudingWords.lastIndexOf(" ")))
+                            //surroudingWords =  surroudingWords.match(refind, "")
+
+                            //var surroudingWords = $( $.parseHTML(valspan) ) ; ??????
+
+                            //console.dir("filterIndex:"+filterIndex);
+                            //console.dir(valspan);
+                            //console.dir(surroudingWords);
+
+                            var detail = { "podaci": surroudingWords, "meta": key+'-'+count,'position':count }    ;
+                            stavke.push(detail);
+
+                            count++;
+                        }
+
+
+//                    //check if replacement happend
+//                    if(out.length!=valspan.length){
+//                        //push item to list
+//                        var detail = { "podaci": filter, "meta": key+'-'+count,'position':count }    ;
+//                        stavke.push(detail);
+//                        // increase count
+//                        count++;
+//                    }
+
+                    //create list
+
+                    //if (stavke.indexOfId(detail) == -1)
 
 
 
-            }
+
+                        return valspan;
+                });
+
+            
         });
 
         pr.displaySearch();
@@ -203,7 +317,7 @@ function triggerEvent(el, eventName, options) {
 
 var pretraga = function() {
 
-    var stavke = [];
+    
 
 
     var resetF = function() {
@@ -228,8 +342,7 @@ var pretraga = function() {
 
 
             // sta ako ima vise pojavaljivanja nekog termina u jednom pasusu? da li treba da se prikaze u pretrazi
-            if (stavke.indexOf(e.detail) == -1)
-                stavke.push(e.detail);
+          
 
         });
 
