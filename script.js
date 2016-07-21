@@ -333,14 +333,18 @@ function parseH3subsection(clicked,clickedNodeName){
 
     $(helements).each(function(index) {
             //$('<span class="h3sub">'+helements[index].innerText.replace(/\u00a0/g, " ")+'</span>').insertAfter('#'+clicked);
-            $('#subNavHolder').append('<span class="h3sub">'+helements[index].innerText.replace(/\u00a0/g, " ")+'</span>');
+            $('#subNavHolder').append('<span class="h3sub" id="showContSub'+index+'" >'+helements[index].innerText.replace(/\u00a0/g, " ")+'</span>');
 
             contsub['showContSub' + index] = $(helements[index]).nextUntil(helements[index + 1]).andSelf();
 
             //napravi click event za svaki span
+            $('#showContSub' + index).click(function() {
+                $('#displayCont').html();
+                $('#displayCont').html(contsub['showContSub' + index]);
+            });
+
 
     })
-console.dir(helements);
 
 }
 
