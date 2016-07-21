@@ -25,33 +25,35 @@ $(document).ready(function() {
         pr.removeResult();
     })
 
-    // show compare window 
+    // show compare window
     $('#uporedi').click(function() {
 
         $('#displayContCompare').html(html2compare);
 
-		$(function () {
-		    $("#displayCont").animate({
-		       width: '36%'
-		    }, { duration: 200, queue: false });
-		    $("#displayContCompare").animate({
-		       width: '36%',opacity: 1.0
-		    }, { duration: 200, queue: false });
-		});
+        $(function () {
+            $("#displayCont").animate({
+               width: '36%'
+            }, { duration: 200, queue: false });
+            $("#displayContCompare").animate({
+               width: '36%',opacity: 1.0
+            }, { duration: 200, queue: false });
+        });
 
     });
 
 
 
-    var h = $(":header");
+    //var h = $(":header");
+    //exclude H3 from parsing - parse H3 on demand
+    var h = $("h1,h2");
     var cont = {};
     var excludedSearch = [];
     var oldH = 0;
     var html2compare;
     	//http://stackoverflow.com/questions/11583271
-	    $.get("xtestCompare.html", function(response) {
-	     	html2compare = response;
-		});
+        $.get("xtestCompare.html", function(response) {
+         	html2compare = response;
+        });
     //console.dir(h);
 
     $(h).each(function(index) {
@@ -64,7 +66,7 @@ $(document).ready(function() {
            excludedSearch.push('showCont'+index);
            //set plain HTML for Chapters
 
-        } else {
+        } else  {
             $("#nav").append('<span class="header" id="showCont' + index + '">' + h[index].innerText.replace(/\u00a0/g, " ") + '</span>');
         }
 
@@ -85,6 +87,8 @@ $(document).ready(function() {
         $('#showCont' + index).click(function() {
             $('#displayCont').html();
             $('#displayCont').html(cont['showCont' + index]);
+            //posto se vec ucitao u #displayCont
+            parseH3subsection('showCont' + index, h[index].nodeName);
         });
 
     });
@@ -186,7 +190,7 @@ $(document).ready(function() {
 
                         var pojam_za_prikaz = val_text.substring(pocetni_index, krajnji_index)
 
-                      
+
                         count = count+1;
 
 
@@ -197,12 +201,12 @@ $(document).ready(function() {
 
                               //if (stavke.indexOfId(detail) == -1)
                                 stavke.push(detail);
-    
+
                            // triggerEvent(document, "nadjen-unos", {  })
 
                         })
                         return val_ht;
-                    
+
                 }
                 //val.html( highlighting );
 
@@ -271,7 +275,7 @@ var surroudingWords = $( $.parseHTML(pretext) ).text().split(" ").splice(-5).joi
                         return valspan;
                 });
 
-            
+
         });
 
         pr.displaySearch();
@@ -299,11 +303,50 @@ window.onpopstate = function(event) {
 
 
 
-// show first 
+// show first
 $('#showCont0').trigger('click');
 
 
 });
+
+
+function parseH3subsection(clicked,clickedNodeName){
+
+    // do not show if H1 node clicked
+    if ( clickedNodeName=="H1"   ) {
+        $('.h3sub').remove();
+        $('#subNavHolder').remove();
+        return;
+    }
+
+    //alert(clicked);
+    var contsub = {};
+    $('.h3sub').remove();
+    $('#subNavHolder').remove();
+    //parse clicked element value for H3
+    var helements = $("#displayCont h3");
+
+    if(helements.length<1){return;}
+
+    //create element to hold subnav
+    $('<span  id="subNavHolder"></span>').insertAfter('#'+clicked);
+
+    $(helements).each(function(index) {
+            //$('<span class="h3sub">'+helements[index].innerText.replace(/\u00a0/g, " ")+'</span>').insertAfter('#'+clicked);
+            $('#subNavHolder').append('<span class="h3sub" id="showContSub'+index+'" >'+helements[index].innerText.replace(/\u00a0/g, " ")+'</span>');
+
+            contsub['showContSub' + index] = $(helements[index]).nextUntil(helements[index + 1]).andSelf();
+
+            //napravi click event za svaki span
+            $('#showContSub' + index).click(function() {
+                $('#displayCont').html();
+                $('#displayCont').html(contsub['showContSub' + index]);
+            });
+
+
+    })
+
+}
 
 
 function triggerEvent(el, eventName, options) {
@@ -319,7 +362,7 @@ function triggerEvent(el, eventName, options) {
 
 var pretraga = function() {
 
-    
+
 
 
     var resetF = function() {
@@ -340,11 +383,11 @@ var pretraga = function() {
     var dodajF = function() {
 
         document.addEventListener("nadjen-unos", function(e) {
-            //console.log(e.detail); 
+            //console.log(e.detail);
 
 
             // sta ako ima vise pojavaljivanja nekog termina u jednom pasusu? da li treba da se prikaze u pretrazi
-          
+
 
         });
 
