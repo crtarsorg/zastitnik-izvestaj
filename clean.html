@@ -4,15 +4,22 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Izvestaj 2015</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
 </head>
 
 <body>
     <style>
-    #nav {
-        max-width: 15%;
+     /* max-width: 15%; */
+    #nav, .navig {
+       
         font-size: 12px;
         float: left;
         padding: 1%;
+    }
+    .left-side{
+        max-width: 20%;
+       
     }
     
     #nav span {
@@ -111,8 +118,42 @@
     <script src="https://cdn.jsdelivr.net/pouchdb/5.4.5/pouchdb.min.js"></script>
     <script src="script.js"></script>
     <script src="tags.js"></script>
-    <div id="nav">
+
+    <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+            $('#tabs').tab();
+        });
+    </script>  
+    
+    <div>
+        
     </div>
+
+
+    <div id="content" class="left-side">
+        <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+            <li class="active">
+                <a href="#nav" data-toggle="tab">Sadrzaj</a>
+            </li>
+            <li>
+                <a href="#referece" data-toggle="tab">Reference</a>
+            </li>
+        </ul>
+
+        <div id="my-tab-content" class="tab-content">
+            <div  class="navig tab-pane" id="nav">        </div>
+
+            <div class="navig tab-pane" id="referece">
+               <span class="header" id="showCont6">Posebni izveštaji</span>
+                <span class="header" id="showCont6">Zakonodavne inicijative</span>
+                <span class="header" id="showCont6">Mišljenja</span>
+                <span class="header" id="showCont6">Međunarodni izveštaji</span>
+                <span class="header" id="showCont6">Preporuke</span>
+            </div>
+          
+        </div>
+    </div>
+
     <div id="displayCont">
     </div>
     <div id="displayContCompare">

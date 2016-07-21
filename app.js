@@ -3,8 +3,9 @@ var fs = require('fs');
 var sanitizeHtml = require('sanitize-html');
 var html = require("html");
 
+var folder = "./reference/"
 
-getFiles("./dokumenti/");
+getFiles( folder );
 
 function getFiles (dir, files_){
     files_ = files_ || [];
@@ -58,7 +59,7 @@ function ocisti(podaci , naziv) {
 	clean = html.prettyPrint(clean, {indent_size: 2}); 
 
 
-	fs.writeFile("./dokumenti/"+naziv+"rez.html"/*"./clean.html"*/, clean, function(err) {
+	fs.writeFile( folder +naziv+"rez.html"/*"./clean.html"*/, clean, function(err) {
 	    if(err) {
 	        return console.log(err);
 	    }
