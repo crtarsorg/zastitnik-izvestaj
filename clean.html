@@ -17,37 +17,37 @@
         float: left;
         padding: 1%;
     }
-    .left-side{
-        max-width: 20%;
+    .left-side {
+        width: 20%;
        
     }
     
-    #nav span {
+    .navig span {
         margin: 8px;
         padding: 2px;
         display: block;
     }
  
-    #nav span.emptyHeader {
+    .navig span.emptyHeader {
 		font-weight:600;
         background-color: #cccccc;
     }
 
-    #nav span.emptyHeader:hover {
+    .navig span.emptyHeader:hover {
 		cursor: hand;
     }
 	
-    #nav span.h3sub {
+    .navig span.h3sub {
 		font-weight:600;
         background-color: rgb(234, 234, 234);
 		padding:3px 15px;
     }
 
-    #nav span.h3sub:hover {
+    .navig span.h3sub:hover {
 		cursor: hand;
     }	
 	
-    #nav span.header:hover {
+    .navig span.header:hover {
         cursor: hand;
         background-color: #cccccc;
     }
@@ -134,12 +134,8 @@
     <script src="https://cdn.jsdelivr.net/pouchdb/5.4.5/pouchdb.min.js"></script>
     <script src="script.js"></script>
     <script src="tags.js"></script>
-
-    <script type="text/javascript">
-        jQuery(document).ready(function ($) {
-            $('#tabs').tab();
-        });
-    </script>  
+    <script src="static/reference.js"></script>
+     
     
     <div>
         
@@ -152,19 +148,20 @@
                 <a href="#nav" data-toggle="tab">Sadrzaj</a>
             </li>
             <li>
-                <a href="#referece" data-toggle="tab">Reference</a>
+                <a href="#reference" data-toggle="tab">Reference</a>
             </li>
         </ul>
 
         <div id="my-tab-content" class="tab-content">
-            <div  class="navig tab-pane" id="nav">        </div>
+            <div  class="navig tab-pane active" id="nav">        </div>
 
-            <div class="navig tab-pane" id="referece">
-               <span class="header" id="showCont6">Posebni izveštaji</span>
-                <span class="header" id="showCont6">Zakonodavne inicijative</span>
-                <span class="header" id="showCont6">Mišljenja</span>
-                <span class="header" id="showCont6">Međunarodni izveštaji</span>
-                <span class="header" id="showCont6">Preporuke</span>
+            <div class="navig tab-pane" id="reference">
+                <span class="emptyHeader" id="showCont0">СПРЕЧАВАЊЕ И ЗАШТИТА ЖЕНА ОД НАСИЉА У ПОРОДИЦИ И ПАРТНЕРСКИМ ОДНОСИМА</span>
+               <span class="header" id="showCont6"><a href="#ref1">Posebni izveštaji</a></span>
+                <span class="header" id="showCont6"><a href="#ref2">Zakonodavne inicijative</a></span>
+                <span class="header" id="showCont6"><a href="#ref3">Mišljenja</a></span>
+                <span class="header" id="showCont6"><a href="#ref4">Međunarodni izveštaji</a></span>
+                <span class="header" id="showCont6"><a href="#ref5">Preporuke</a></span>
             </div>
           
         </div>
@@ -172,11 +169,20 @@
 
     <div id="displayCont">
     </div>
+    
     <div id="displayContCompare">
     </div>
+    
     <div id="clearFloat"></div>
+
     <div class="desno-gore">
-    <button id="uporedi">Uporedi</button>
+        <select style="float: left" name="" id="">
+            <option value="">2015</option>
+            <option value="">2014</option>
+            <option value="">2013</option>
+        </select>
+        <button id="uporedi">Uporedi</button>
+
         <div id="pretraga">
             <input id="filter" type="text" placeholder="Pretrazite">
         </div>
