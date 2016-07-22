@@ -1,6 +1,8 @@
 var stavke = [];
 var cont = {};
 
+var ci2015, ci2014, ci2013; 
+
 
 Array.prototype.indexOfId = function(el) {
     for (var i = 0; i < this.length; i++)
@@ -26,8 +28,49 @@ $(document).ready(function() {
         pr.removeResult();
     })
 
+
+    var folder = "dokumenti/";
+
+     $.get(folder + "ci2015_izabrano.html" , function(response) {
+            ci2015 = response;
+        });
+     $.get(folder + "ci2014_izabrano.html" , function(response) {
+            ci2014 = response;
+        });
+
+     $.get(folder + "ci2013_izabrano.html" , function(response) {
+            ci2013 = response;
+        });
+
+
     // show compare window
     $('#uporedi').click(function() {
+
+        //uzmi vrednost kliknutog
+        var godina = $("#izvestajUporedi").val()
+        var dokument ="";
+       
+
+        switch(godina) {
+            case "2015":        
+                html2compare = ci2015;
+                break;
+            case "2014":                
+                html2compare = ci2014;
+                break;
+            case "2013":                
+               html2compare = ci2013;
+                break;
+        }
+
+        if(dokument!=""){
+           
+            
+        }
+        //alert()
+        //ucitaj izvestaj koji odgovara godini
+        //spakuj ga u neke promenljive
+        // i ucitaj samo onu koja je neophodna  
 
         $('#displayContCompare').html(html2compare);
 
