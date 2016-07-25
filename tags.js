@@ -1,54 +1,40 @@
-//iniciajlni tagovi
-//
-//smestanje u web bazu
+function prikaziTagovane(arg) {
+  
+  var naziv = "";
 
+  switch( arg ) {
+    case "ministarstva":
+      naziv = "ministarstva";   
+      break;
+    case "vlada":
+      naziv = "vlada";
+      break;
+    case "skupstina":
+      naziv = "skupstina";
+      break;
+    case "ostali":
+      naziv = "ostali";
+      break;
+  }
 
-var db = new PouchDB('tagovi');
-
-
-function pronadji(argument) {
-	// body...
-}
-
-function addTag(text) {
-  var tag = {
-    _id: new Date().toISOString(),
-    title: text,
-    completed: false,
-    nek_param : "levi neki"
-  };
-  db.put(tag, function callback(err, result) {
-    if (!err) {
-    	console.log(result);
-      console.log('Successfully posted a tag!');
+    $("p[akter]").hide()
+     
+    if(naziv =="ministarstva"){
+     //$("p[akter]").hide() 
+      $("p[akter]").filter(function(ind,la){if($(la).attr('akter')) return ($(la).attr('akter').indexOf('ministar')!=-1)}).show()
     }
-  });
+    else if(naziv =="vlada"){
+     //$("p[akter]").hide() 
+      $("p[akter='vlada']").show()
+    }
+
+    else if(naziv =="skupstina"){
+     //$("p[akter]").hide() 
+      $("p[akter='skupstina']").show()
+    }
+    else if(naziv =="ostali"){
+     //$("p[akter]").hide() 
+      $("p[akter='ostali']").show()
+    }
+
 }
-
-
-function showTags() {
-  db.allDocs({include_docs: true, descending: true}, function(err, doc) {
-    console.log(doc.rows);
-  });
-}
-
-function getTag(id ) {
-	db.get( id ).then(function (doc) {
-	  console.log(doc);
-	}).catch(function (err) {
-	  console.log(err);
-	});
-}
-
-/*window['db'] = db;
-window['addTag'] = addTag;
-window['showTags'] = showTags;
-window['getTag'] = getTag;*/
-
-
-// kada se predje kursorom preko nekog pasusa
-// otvara se prozorcic
-// sa poljem za unos tagova
-
-
-
