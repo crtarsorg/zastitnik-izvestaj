@@ -19,6 +19,9 @@ $(document).ready(function() {
 
     pr.appendFinded();
 
+    //get the footnotes
+    var footnotes = $('#footnotes').html();
+    $('#footnoteContent').html(footnotes)
 
     $("#hideSearch").click(function(ev) {
         pr.hideResult();
@@ -341,16 +344,26 @@ $(document).ready(function() {
 
     window.onpopstate = function(event) {
         var hash = window.location.hash.replace("#", "");
-        $('#' + hash.split('-')[0]).trigger('click');
 
-        //scroll to found keyword in content
-        $('html body').animate({
-            scrollTop: $('#displayCont #' + hash).offset().top
-        }, 500);
+       //if clicked on search link
+        if(hash.indexOf('showCont') > -1){
+            $('#' + hash.split('-')[0]).trigger('click');
+
+            //scroll to found keyword in content
+            $('html body').animate({
+                scrollTop: $('#displayCont #' + hash).offset().top
+            }, 500);
+        } else {
+            $('html body').animate({
+                scrollTop: $('#footnoteContent').find('#'+hash.substring(1)).offset().top
+            }, 500);
+        }
 
     };
 
 
+    //empty #mainDocContent to remove duplicated anchors
+    $('#mainDocContent').html('');
 
     // show first
     $('#showCont0').trigger('click');
