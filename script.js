@@ -13,6 +13,11 @@ Array.prototype.indexOfId = function(el) {
 
 
 $(document).ready(function() {
+
+
+
+     
+
     console.log("ready!");
 
     var pr = pretraga();
@@ -104,7 +109,8 @@ $(document).ready(function() {
     });
     //console.dir(h);
 
-    $(h).each(function(index) {
+
+    var parseDoc = function(index) {
         //console.dir(h[index]);
         //trim &nbsp
 
@@ -139,9 +145,14 @@ $(document).ready(function() {
             parseH3subsection('showCont' + index, h[index].nodeName);
         });
 
-    });
+    }
 
-    
+   
+
+    $("#mainDocContent").load("content.html", function(cond) {
+           h = $("h1,h2");
+           $('h1,h2').each(parseDoc);
+        });
 
 
 
