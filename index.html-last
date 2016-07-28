@@ -1,0 +1,148 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Izvestaj 2015</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://cdn.jsdelivr.net/pouchdb/5.4.5/pouchdb.min.js"></script>
+    <script src="script.js"></script>
+    <script src="tags.js"></script>
+    <script src="static/reference.js"></script>
+    <style type="text/css">
+    .header {
+        background-color: #72D0EB;
+        height: 100px;
+        position: relative;
+    }
+    
+    .header ul {
+        position: relative;
+        text-align: center;
+        top: 50%;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .header li {
+        display: inline-block;
+        min-width: 150px;
+    }
+    
+    .header li:before {
+        content: " | ";
+    }
+    
+    .header li:first-child {
+        content: none;
+    }
+    
+    .krug {
+        margin-top: -60px;
+        position: absolute;
+        border-radius: 70px;
+        margin-left: 5%;
+        width: 140px;
+        height: 140px;
+        padding-right: 45px;
+        padding-top: 30px;
+        background-color: #58595B;
+        color: #72D0EB;
+        font-size: 18px;
+        text-align: right;
+    }
+    
+    .content {
+        margin-top: 100px;
+    }
+    </style>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        console.log("ready!");
+
+        //define var for parsed data
+        var cont = {};
+
+
+
+       
+    })
+    </script>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <header class="header">
+            <ul>
+                <li onclick="prikaziTagovane('vlada')">Vlada</li>
+                <li onclick="prikaziTagovane('ministarstva')">Ministarstva</li>
+                <li onclick="prikaziTagovane('skupstina')">Skupstina</li>
+            </ul>
+        </header>
+        <div class="krug">Izvestaj zastitnika gradjana</div>
+        <div class="content">
+            <div id="content" class="left-side">
+                <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+                    <li class="active">
+                        <a href="#nav" data-toggle="tab">Sadrzaj</a>
+                    </li>
+                    <li>
+                        <a href="#reference" data-toggle="tab">Reference</a>
+                    </li>
+                </ul>
+                <div id="my-tab-content" class="tab-content">
+                    <div class="navig tab-pane active" id="nav"> </div>
+                    <div class="navig tab-pane" id="reference">
+                        <span class="emptyHeader" id="showCont0">СПРЕЧАВАЊЕ И ЗАШТИТА ЖЕНА ОД НАСИЉА У ПОРОДИЦИ И ПАРТНЕРСКИМ ОДНОСИМА</span>
+                        <span class="header" id="showCont6"><a href="#ref1">Posebni izveštaji</a></span>
+                        <span class="header" id="showCont6"><a href="#ref2">Zakonodavne inicijative</a></span>
+                        <span class="header" id="showCont6"><a href="#ref3">Mišljenja</a></span>
+                        <span class="header" id="showCont6"><a href="#ref4">Međunarodni izveštaji</a></span>
+                        <span class="header" id="showCont6"><a href="#ref5">Preporuke</a></span>
+                    </div>
+                </div>
+            </div>
+            <div id="displayCont">
+            </div>
+            <div id="displayContCompare">
+            </div>
+            <div id="clearFloat"></div>
+            <div class="desno-gore">
+                <select style="float: left" name="godina" id="izvestajUporedi">
+                    <option value="2015">2015</option>
+                    <option value="2014">2014</option>
+                    <option value="2013">2013</option>
+                </select>
+                <button id="uporedi">Uporedi</button>
+                <div id="pretraga">
+                    <input id="filter" type="text" placeholder="Pretrazite">
+                </div>
+                <div id="verzije">
+                    <a href="#">lat</a>
+                    <a href="#">en</a>
+                    <a href="#">hun</a>
+                    <a href="#">slo</a>
+                    <a href="#">rus</a>
+                    <a href="#">rom</a>
+                    <a href="#">alb</a>
+                </div>
+            </div>
+            <div id="rezultat-pretrage">
+                <div class="control" style="display: none">
+                    <a id="hideSearch" href="#">sakrij</a>
+                    <a id="closeSearch" href="#">X</a>
+                </div>
+                <div class="sadrzaj-pretrage">
+                </div>
+            </div>
+            <div id="mainDocContent">
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

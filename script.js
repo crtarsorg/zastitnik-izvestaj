@@ -25,8 +25,7 @@ $(document).ready(function() {
     pr.appendFinded();
 
     //get the footnotes
-    var footnotes = $('#footnotes').html();
-    $('#footnoteContent').html(footnotes)
+    
 
     $("#hideSearch").click(function(ev) {
         pr.hideResult();
@@ -115,13 +114,13 @@ $(document).ready(function() {
         //trim &nbsp
 
         if (h[index].nodeName == "H1") {
-            $("#nav").append('<span class="emptyHeader" id="showCont' + index + '">' + h[index].innerText.replace(/\u00a0/g, " ") + '</span>'); //return true;
+            $("#nav").append('<p class="emptyHeader nav-section" id="showCont' + index + '">' + h[index].innerText.replace(/\u00a0/g, " ") + '</p>'); //return true;
             oldH = index;
             excludedSearch.push('showCont' + index);
             //set plain HTML for Chapters
 
         } else {
-            $("#nav").append('<span class="header" id="showCont' + index + '">' + h[index].innerText.replace(/\u00a0/g, " ") + '</span>');
+            $("#nav").append('<p class="header" id="showCont' + index + '">' + h[index].innerText.replace(/\u00a0/g, " ") + '</p>');
         }
 
         //put everything between H tags into array
@@ -139,6 +138,10 @@ $(document).ready(function() {
 
         //function for click in left menu - ID's in main menu has same id as index in cont variable
         $('#showCont' + index).click(function() {
+
+            //remove active class
+            $(this).parent().children().removeClass("active")
+            $(this).addClass('active');
             $('#displayCont').html();
             $('#displayCont').html(cont['showCont' + index]);
             //posto se vec ucitao u #displayCont
@@ -152,6 +155,9 @@ $(document).ready(function() {
     $("#mainDocContent").load("content.html", function(cond) {
            h = $("h1,h2");
            $('h1,h2').each(parseDoc);
+
+          var footnotes = $('#footnotes').html();
+        $('#footnoteContent').html(footnotes)
         });
 
 
@@ -380,6 +386,8 @@ $(document).ready(function() {
     $('#showCont0').trigger('click');
 
 
+    
+
 });
 
 
@@ -403,11 +411,11 @@ function parseH3subsection(clicked, clickedNodeName) {
         return; }
 
     //create element to hold subnav
-    $('<span  id="subNavHolder"></span>').insertAfter('#' + clicked);
+    $('<p  id="subNavHolder"></p>').insertAfter('#' + clicked);
 
     $(helements).each(function(index) {
-        //$('<span class="h3sub">'+helements[index].innerText.replace(/\u00a0/g, " ")+'</span>').insertAfter('#'+clicked);
-        $('#subNavHolder').append('<span class="h3sub" id="showContSub' + index + '" >' + helements[index].innerText.replace(/\u00a0/g, " ") + '</span>');
+        //$('<p class="h3sub">'+helements[index].innerText.replace(/\u00a0/g, " ")+'</p>').insertAfter('#'+clicked);
+        $('#subNavHolder').append('<p class="h3sub" id="showContSub' + index + '" >' + helements[index].innerText.replace(/\u00a0/g, " ") + '</p>');
 
         contsub['showContSub' + index] = $(helements[index]).nextUntil(helements[index + 1]).andSelf();
 
