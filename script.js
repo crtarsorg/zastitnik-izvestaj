@@ -146,6 +146,9 @@ $(document).ready(function() {
             $('#displayCont').html(cont['showCont' + index]);
             //posto se vec ucitao u #displayCont
             parseH3subsection('showCont' + index, h[index].nodeName);
+			//scroll clicked button to top
+			$('#content').scrollTop( 0 );
+			$('#content').scrollTop( $('#showCont' + index).position().top );
         });
 
     }
