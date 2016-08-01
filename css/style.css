@@ -16,6 +16,33 @@ body {
     position: relative;
 }
 
+.navigation {
+    /*height: calc(100% - 200px);
+    overflow-x: hidden;
+    overflow-y: auto;
+	margin-bottom:100px;
+   	background-color: red;
+   	position: relative;
+   	height: 500px;
+   	overflow: hidden;
+   	width: 350px;
+   	margin: 0px auto;	*/
+	height: calc(100% - 200px);
+	overflow: hidden;
+}
+.navigation #content{
+/*	min-width:350px;
+    width: 100%;
+    overflow: auto;
+    height: 100%;
+    padding-right: 15px;*/
+	height: 100%;
+	width: calc(100% + 32px);
+	overflow: auto;
+	margin-bottom:100px;
+	padding-bottom: 700px;
+}
+
    
     #rezultat-pretrage {
         background-color: white;
