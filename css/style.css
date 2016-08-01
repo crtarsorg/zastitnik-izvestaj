@@ -75,7 +75,42 @@ body {
     #uporedi{
         float: left;
         margin-right: 20px;
+
+        background: #58595B;
+        border-radius: 20px;
+        border: 1px solid #58595b;
+        color: #72D0EB;
+        padding: 5px 15px;
+        font-weight: bold;
     }
+
+    .ui.simple.active.dropdown>.menu, .ui.simple.dropdown:hover>.menu {
+        width: 80% !important;            
+        margin-left: 5%;
+    }
+    .ui.dropdown .menu>.item {
+          background: #58595B !important;
+          color: #72D0EB !important;
+        text-align: center !important;
+        font-size: 2rem !important;
+        border-bottom: 1px solid black !important;
+    }
+
+/* .compare button {
+    background: #58595B;
+    border-radius: 20px;
+    border: 1px solid #58595b;
+    color: #72D0EB;
+    padding: 5px 15px;
+    font-weight: bold;
+} */
+/* .compare select {
+    width: 82px;
+    *position: absolute;
+  *display: none;
+} */
+
+
 
 
 .navig p {
@@ -171,19 +206,7 @@ body {
     text-decoration: underline;
     font-size: 15px;
 }
-.compare button {
-    background: #58595B;
-    border-radius: 20px;
-    border: 1px solid #58595b;
-    color: #72D0EB;
-    padding: 5px 15px;
-    font-weight: bold;
-}
-.compare select {
-    width: 82px;
-    *position: absolute;
-  *display: none;
-}
+
 .search input {
     border-radius: 20px;
     border: 1px solid #58595b;
