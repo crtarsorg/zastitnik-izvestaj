@@ -11,6 +11,11 @@
     <script src="script.js"></script>
     <script src="tags.js"></script>
     <script src="static/reference.js"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/components/dropdown.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/components/dropdown.min.css">
+
     <script type="text/javascript">
     $(document).ready(function() {
         console.log("ready!");
@@ -55,12 +60,25 @@
                             </div>
                         </li>
                         <li class="compare clear pull-left">
-                            <button id="uporedi">Uporedi</button>
-                            <select name="godina" id="izvestajUporedi">
-                                <option value="2015">2015</option>
-                                <option value="2014">2014</option>
-                                <option value="2013">2013</option>
-                            </select>
+                            <!-- <button id="uporedi">Uporedi sa prethodnim izveštajima</button> -->
+
+
+                            <div class="ui compact menu">
+                              <div class="ui simple dropdown item" >
+                               <span id="uporedi">Uporedi po godinama</span>
+                                
+                                <div class="menu">
+                                  <div class="item">2015</div>
+                                  <div class="item">2014</div>
+                                  <div class="item">2013</div>
+                                </div>
+                              </div>
+                            </div>
+                           <!--  <select name="godina" id="izvestajUporedi">
+                               <option value="2015">2015</option>
+                               <option value="2014">2014</option>
+                               <option value="2013">2013</option>
+                           </select> -->
                         </li>
                         <li class="search pull-left">
                             <div id="pretraga">
@@ -80,7 +98,7 @@
                         <a href="#nav" data-toggle="tab">Sadrzaj</a>
                     </li>
                     <li>
-                        <a href="#reference" data-toggle="tab">Reference</a>
+                        <a href="#reference" data-toggle="tab">Dodatni izveštaj</a>
                     </li>
                 </ul>
 
