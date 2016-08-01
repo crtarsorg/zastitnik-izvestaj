@@ -152,6 +152,14 @@ max-width: 20%;
 
 
 
+td{
+    border-top: none;
+    border-left: none;
+    border-bottom: solid green 1px;
+    border-right: solid green 1px;
+    padding: 0  5px 0 5px;
+}
+
 
 .navig p {
         margin: 8px;
