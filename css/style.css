@@ -46,6 +46,7 @@ body {
 
 	/* h3 subnavigation */
 	#subNavHolder{
+		margin-top:30px;
 
 	}
 	#subNavHolder p{
@@ -65,7 +66,23 @@ max-width: 20%;
     overflow: hidden;	
 	}
 
+#mainLine {
+	background-color:#72D0EB;
+    content: " ";
+    display: block;
+    height: 10px;
+    position: absolute;
+    width: 100%;
+    z-index: -1;
+    margin-left: -50px;
+    margin-top: 8px;
+        }	
 
+	#footnoteContent{
+		/* margin-top:calc(100%); */
+		margin-top:300px;
+		display: inline-block;
+	}
    
     #rezultat-pretrage {
         background-color: white;
@@ -254,6 +271,20 @@ max-width: 20%;
     background-repeat: no-repeat;
     background-size: 30px auto;
 }
+
+.navigation p.refactive {
+    background: #cee66e;
+    border-radius: 25px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+/*     background-image: url("../images/nav-active.png"); */
+    background-position: calc(100% + 1px);
+    background-repeat: no-repeat;
+    background-size: 30px auto;
+}
+
+
+
 .navigation .nav-section {
     font-weight: bold;
 }
