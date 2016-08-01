@@ -17,9 +17,16 @@ var sadrzaj;
 	
 		loadReferencesFor(curPage);
 		
+		$('#subNavHolder').html('');
+		
+		$('#displayRefButtonReference').hide();
+		$('#displayRefButtonNav').show();
+		
 	  } else {
 		  //load data from cont
-		  $("#displayCont").html(cont[curPage]);
+		  //$("#displayCont").html(cont[curPage]);
+		  //a batter comeback
+		  $('#'+curPage).trigger('click');
 	  }
 	}); 
 

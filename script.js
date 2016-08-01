@@ -152,6 +152,13 @@ $(document).ready(function() {
 			
 			//set Global current pageX
 			curPage = 'showCont' + index;
+			//check if references exist
+			$('#displayRefButtonReference').hide();
+			$('#displayRefButtonNav').hide();
+			
+			$.get("reference/"+curPage+".html",{ "_": $.now() }, function(response) {
+				$('#displayRefButtonReference').show();
+			});
 			
         });
 
