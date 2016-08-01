@@ -43,6 +43,29 @@ body {
 	padding-bottom: 700px;
 }
 
+
+	/* h3 subnavigation */
+	#subNavHolder{
+
+	}
+	#subNavHolder p{
+		cursor: hand;
+		background: #72D0EB;
+		border-radius: 25px;
+		border-top-right-radius: 0px;
+		border-bottom-right-radius: 0px;
+		background-position: calc(100% + 1px);
+		background-repeat: no-repeat;
+		background-size: 30px auto;	
+		padding: 7px 15px;
+float:left;
+max-width: 20%;
+    margin-left: 10px;
+    max-height: 33px;
+    overflow: hidden;	
+	}
+
+
    
     #rezultat-pretrage {
         background-color: white;

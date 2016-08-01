@@ -156,11 +156,14 @@ $(document).ready(function() {
    
 
     $("#mainDocContent").load("content.html", function(cond) {
-           h = $("h1,h2");
-           $('h1,h2').each(parseDoc);
+	        h = $("h1,h2");
+	        $('h1,h2').each(parseDoc);
 
-          var footnotes = $('#footnotes').html();
-        $('#footnoteContent').html(footnotes)
+          	var footnotes = $('#footnotes').html();
+			$('#footnoteContent').html(footnotes);
+
+			//load init text
+$('#showCont0').trigger('click');
         });
 
 
@@ -386,7 +389,7 @@ $(document).ready(function() {
     $('#mainDocContent').html('');
 
     // show first
-    $('#showCont0').trigger('click');
+    //$('#showCont0').trigger('click');
 
 
     
@@ -413,8 +416,8 @@ function parseH3subsection(clicked, clickedNodeName) {
     if (helements.length < 1) {
         return; }
 
-    //create element to hold subnav
-    $('<p  id="subNavHolder"></p>').insertAfter('#' + clicked);
+    //create element to hold subnav -OLD VERSION
+/*     $('<p  id="subNavHolder"></p>').insertAfter('#' + clicked);
 
     $(helements).each(function(index) {
         //$('<p class="h3sub">'+helements[index].innerText.replace(/\u00a0/g, " ")+'</p>').insertAfter('#'+clicked);
@@ -429,7 +432,27 @@ function parseH3subsection(clicked, clickedNodeName) {
         });
 
 
-    })
+    }) */
+
+	
+    //create element to hold subnav -OLD VERSION
+    $('<div  id="subNavHolder">').insertBefore('#displayCont');
+
+    $(helements).each(function(index) {
+        //$('<p class="h3sub">'+helements[index].innerText.replace(/\u00a0/g, " ")+'</p>').insertAfter('#'+clicked);
+        $('#subNavHolder').append('<p class="h3sub" id="showContSub' + index + '" >' + helements[index].innerText.replace(/\u00a0/g, " ") + '</p>');
+
+        contsub['showContSub' + index] = $(helements[index]).nextUntil(helements[index + 1]).andSelf();
+
+        //napravi click event za svaki span
+        $('#showContSub' + index).click(function() {
+            $('#displayCont').html();
+            $('#displayCont').html(contsub['showContSub' + index]);
+        });
+
+
+    }) 
+    
 
 }
 
