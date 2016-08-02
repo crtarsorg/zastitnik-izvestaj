@@ -15,7 +15,14 @@ body {
 	
 }
 #displayRefButton{
-	background: #72D0EB;
+	background-color: #72D0EB;
+	
+	/*background: url("../images/corner.png")  no-repeat scroll right center #72D0EB ;*/
+	
+	/*background-image:url("../images/corner.png") bottom right no-repeat;
+    background-repeat: no-repeat;
+    background-position: bottom right;	
+	no-repeat bootom right;*/
     border-radius: 25px;
     border-top-right-radius: 0px;
     border-bottom-right-radius: 0px;
@@ -25,8 +32,19 @@ body {
     padding: 20px 30px;
     margin-top: 8px;
     font-size: 20px;
-    width: 100%;	
+    width: 100%;
+overflow:hidden;	
 }
+#displayRefButton2222:before{
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom:0;
+    border-bottom: 500px solid white;
+    border-left: 80px solid red;
+    width: 0;	
+}
+
+
 #displayRefButtonReference, #displayRefButtonNav{
 	display:none;
 }
