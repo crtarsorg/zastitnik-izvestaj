@@ -379,22 +379,28 @@ $(document).ready(function() {
     window.onpopstate = function(event) {
         var hash = window.location.hash.replace("#", "");
 
+
+          $('html body').animate({
+                scrollTop:  $('#footnoteContent' ).offset().top
+            }, 500);
+
        //if clicked on search link
         if(hash.indexOf('showCont') > -1){
             $('#' + hash.split('-')[0]).trigger('click');
 
-            //scroll to found keyword in content
-            $('html body').animate({
-                scrollTop: $('#displayCont #' + hash).offset().top
+            //scroll to found keyword in content 
+            //html body
+            $('#footnoteContent').animate({
+                scrollTop:  $('#displayCont #' + hash).offset().top
             }, 500);
         } else {
-            $('html body').animate({
-                scrollTop: $('#footnoteContent').find('#'+hash.substring(1)).offset().top
+            $('#footnoteContent').animate({
+                scrollTop:   $('#footnoteContent').scrollTop() + $('#footnoteContent').find('#'+hash.substring(1)).position().top 
+                //$/*('#footnoteContent').find*/('#'+hash.substring(1)).offset().top
             }, 500);
         }
-        //$('#footnoteContent').prop('scrollHeight')
-        //$('#footnoteContent').prop('scrollTop')
 
+      
     };
 
 
