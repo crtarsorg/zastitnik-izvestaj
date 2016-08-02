@@ -16,6 +16,15 @@ body {
     position: relative;
 }
 
+
+    #footnoteContent{
+        position: relative;
+        clear: both;
+        height: 150px;
+        margin: 50px;
+        overflow-y: scroll;
+    }
+    
 .navigation {
     /*height: calc(100% - 200px);
     overflow-x: hidden;

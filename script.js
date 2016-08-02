@@ -381,6 +381,8 @@ $('#showCont0').trigger('click');
                 scrollTop: $('#footnoteContent').find('#'+hash.substring(1)).offset().top
             }, 500);
         }
+        //$('#footnoteContent').prop('scrollHeight')
+        //$('#footnoteContent').prop('scrollTop')
 
     };
 
