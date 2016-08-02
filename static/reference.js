@@ -21,12 +21,19 @@ var sadrzaj;
 		
 		$('#displayRefButtonReference').hide();
 		$('#displayRefButtonNav').show();
+		//set colors to lime
+		$('#mainLine').css("background-color", "#cee66e");
+		$('#displayRefButton').css("background-color", "#cee66e");
 		
 	  } else {
 		  //load data from cont
 		  //$("#displayCont").html(cont[curPage]);
-		  //a batter comeback
+		  //a better comeback
 		  $('#'+curPage).trigger('click');
+		//set colors back to original
+		$('#mainLine').css("background-color", "#72D0EB");
+		$('#displayRefButton').css("background-color", "#72D0EB");
+		
 	  }
 	}); 
 
