@@ -2,7 +2,7 @@ var stavke = [];
 var cont = {};
 
 var ci2015, ci2014, ci2013; 
-
+var curPage;
 
 Array.prototype.indexOfId = function(el) {
     for (var i = 0; i < this.length; i++)
@@ -149,6 +149,17 @@ $(document).ready(function() {
 			//scroll clicked button to top
 			$('#content').scrollTop( 0 );
 			$('#content').scrollTop( $('#showCont' + index).position().top );
+			
+			//set Global current pageX
+			curPage = 'showCont' + index;
+			//check if references exist
+			$('#displayRefButtonReference').hide();
+			$('#displayRefButtonNav').hide();
+			
+			$.get("reference/"+curPage+".html",{ "_": $.now() }, function(response) {
+				$('#displayRefButtonReference').show();
+			});
+			
         });
 
     }
