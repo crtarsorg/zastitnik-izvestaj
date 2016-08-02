@@ -51,10 +51,10 @@ $(document).ready(function() {
 
 
     // show compare window
-    $('#uporedi').click(function() {
+    $('.menu .item').click(function() {
 
         //uzmi vrednost kliknutog
-        var godina = $("#izvestajUporedi").val()
+        var godina = $(this).html()
         var dokument ="";
        
 
@@ -174,8 +174,8 @@ $(document).ready(function() {
 			$('#footnoteContent').html(footnotes);
 
 			//load init text
-$('#showCont0').trigger('click');
-        });
+            $('#showCont0').trigger('click');
+    });
 
 
 
@@ -531,7 +531,6 @@ var pretraga = function() {
     var removeResultF = function(arg) {
         $(".control").hide()
         $('#filter').val('')
-
         $('.filtered').removeClass('filtered')
             //ukloni sve dugmice
 

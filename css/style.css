@@ -42,13 +42,15 @@ body {
 }
 
 
-    #footnoteContent{
-        position: relative;
-        clear: both;
-        height: 150px;
-        margin: 50px;
-        overflow-y: scroll;
-    }
+#footnoteContent{
+    position: relative;
+    clear: both;
+    height: 150px;
+    margin: 50px;
+    overflow-y: scroll;
+    overflow-wrap: break-word;
+    width: 95%;
+}
     
 .navigation {
     /*height: calc(100% - 200px);
