@@ -16,7 +16,7 @@ body {
 }
 #displayRefButton{
 	background-color: #72D0EB;
-	
+	z-index: 5;
 	/*background: url("../images/corner.png")  no-repeat scroll right center #72D0EB ;*/
 	
 	/*background-image:url("../images/corner.png") bottom right no-repeat;
@@ -144,6 +144,7 @@ max-width: 20%;
         right: 5px;
         top: 150px;
         max-width: 250px;
+        z-index: 10;
     }
     
     .control {

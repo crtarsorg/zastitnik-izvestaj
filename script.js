@@ -139,6 +139,11 @@ $(document).ready(function() {
         //function for click in left menu - ID's in main menu has same id as index in cont variable
         $('#showCont' + index).click(function() {
 
+            if(index >4 && index< 23)
+                $(".navbar-nav").show();
+            else
+                $(".navbar-nav").hide();
+
             //remove active class
             $(this).parent().children().removeClass("active")
             $(this).addClass('active');
@@ -379,11 +384,9 @@ $(document).ready(function() {
     window.onpopstate = function(event) {
         var hash = window.location.hash.replace("#", "");
 
+        console.log(hash);
 
-          $('html body').animate({
-                scrollTop:  $('#footnoteContent' ).offset().top
-            }, 500);
-
+         
        //if clicked on search link
         if(hash.indexOf('showCont') > -1){
             $('#' + hash.split('-')[0]).trigger('click');
@@ -394,6 +397,12 @@ $(document).ready(function() {
                 scrollTop:  $('#displayCont #' + hash).offset().top
             }, 500);
         } else {
+
+            if( hash.indexOf("ref")!=0 && hash.length>0  )
+             $('html body').animate({
+                scrollTop:  $('#footnoteContent' ).offset().top
+            }, 500);
+
             $('#footnoteContent').animate({
                 scrollTop:   $('#footnoteContent').scrollTop() + $('#footnoteContent').find('#'+hash.substring(1)).position().top 
                 //$/*('#footnoteContent').find*/('#'+hash.substring(1)).offset().top
