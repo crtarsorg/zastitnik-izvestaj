@@ -83,10 +83,10 @@ $(document).ready(function() {
 
         $(function() {
             $("#displayCont").animate({
-                width: '36%'
+                width: '49%'
             }, { duration: 200, queue: false });
             $("#displayContCompare").animate({
-                width: '36%',
+                width: '49%',
                 opacity: 1.0
             }, { duration: 200, queue: false });
         });
