@@ -3,9 +3,10 @@ var fs = require('fs');
 var sanitizeHtml = require('sanitize-html');
 var html = require("html");
 
-var folder = "./reference/"
+var folder = "./dokumenti/"
 
-getFiles( folder );
+jedanFile(folder , 'refs1.html');
+//getFiles( folder );
 
 function getFiles (dir, files_){
     files_ = files_ || [];
@@ -28,20 +29,35 @@ function getFiles (dir, files_){
 }
 
 
+function jedanFile (dir, files){
+    
+    var name = dir + '' + files;
+   
+	var data = fs.readFileSync( name /*'./test.htm'*/, 'utf8').toString();
+	  
+	ocisti(data, files );
+	
+}
+
 
 
 
 
 function ocisti(podaci , naziv) {
+
+	//'table', 'thead', "style",
 	var initPodesavanja = {
 		allowedTags: [ 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'p', 'a', 'ul', 'ol',
 		  'nl', 'li', 'b', 'i', 'strong', 'em', 'strike', 'code', 'hr', 'br', 'div',
-		  'table', 'thead', 'caption', 'tbody', 'tr', 'th', 'td', 'pre' ,
-		  "script","style","head" ,"title","body","html", "meta" , "img"],
+		   'caption','table', 'thead', 'tbody', 'tr', 'th', 'td', 'pre' ,
+		  "script","head" ,"title","body","html", "meta" , "img"],
 		allowedAttributes: {
 		  a: [ 'href', 'name', 'target' ],
 		  // We don't currently allow img itself by default, but this
 		  // would make sense if we did
+		  table:[  'border', 'cellspacing', 'cellpadding', 'width', 'style' ],
+		  tr:['style'],
+		  td:['style','width','rowspan','style'],
 		  img: [ 'src' ],
 		  meta:['*'],
 		  div:['id',"class"],
@@ -56,6 +72,12 @@ function ocisti(podaci , naziv) {
 	}
 
 	var clean = sanitizeHtml(podaci , initPodesavanja );
+
+	//replace </i><i> ; dodati colspan="2" na pojedina mesta, ne moze automatski
+	//>\d{1,3}\.(\d{1,2}\.)?\s{2,20}
+	//<b></b>
+	//<p> </p>
+	//�
 	clean = html.prettyPrint(clean, {indent_size: 2}); 
 
 
